@@ -1,0 +1,62 @@
+[
+  {
+    "age": 18,
+    "email": "alex@email.com",
+    "name": "Alex"
+  },
+  {
+    "age": 28,
+    "email": "bob@mail.com",
+    "name": "Bob"
+  },
+  {
+    "age": 74,
+    "email": "rick@gmail.com",
+    "name": "Rick"
+  },
+  {
+    "age": 29,
+    "email": "greg@email.ru",
+    "name": "Greg"
+  },
+  {
+    "age": 44,
+    "email": "ron@email.com",
+    "name": "Ron"
+  },
+  {
+    "age": 15,
+    "email": "mike@yandex.ru",
+    "name": "Mike"
+  },
+  {
+    "age": 60,
+    "email": "ken@mail.com",
+    "name": "Ken"
+  },
+  {
+    "age": 38,
+    "email": "regina@mail.ru",
+    "name": "Regina"
+  },
+  {
+    "age": 22,
+    "email": "lina@gmail.com",
+    "name": "Lina"
+  },
+  {
+    "age": 27,
+    "email": "barbara@email.com",
+    "name": "Barbara"
+  },
+  {
+    "age": 41,
+    "email": "jessie@email.com",
+    "name": "Jessie"
+  },
+  {
+    "age": 19,
+    "email": "allie@email.com",
+    "name": "Allie"
+  }
+]
