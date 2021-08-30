@@ -1,14 +1,19 @@
 package by.intro.client;
 
+import by.intro.client.model.Account;
+import by.intro.client.model.AccountRole;
 import by.intro.client.model.Message;
+import by.intro.client.model.Token;
 import io.rsocket.SocketAcceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.util.MimeType;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,10 +28,16 @@ public class RSocketShellClient {
     private final RSocketRequester rsocketRequester;
     private static Disposable disposable;
 
+    private static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInNjb3BlIjoiQURNSU4iLCJleHAiOjE2MzAzMzM0ODYsImp0aSI6IjFmMGIxYWE3LTc2NWYtNGQxMi04NGY2LTBlOGZlM2U4OWI3MyJ9.1TDS5P2maMA3lmTZ75CT1nHo_ilVsjeYSzOscuHGxwU";
+    Account account = new Account("admin", "admin", AccountRole.ADMIN);
+//    Account account = new Account("user", "user", AccountRole.USER);
+
     private static final String CLIENT = "Client";
     private static final String REQUEST = "Request";
     private static final String FIRE_AND_FORGET = "Fire-And-Forget";
     private static final String STREAM = "Stream";
+
+    private final MimeType mimeType = new MediaType("message", "x.rsocket.authentication.bearer.v0");
 
     public RSocketShellClient(RSocketRequester.Builder rsocketRequesterBuilder, RSocketStrategies strategies) {
 
@@ -53,6 +64,7 @@ public class RSocketShellClient {
         log.info("\nSending one request. Waiting for one response...");
         Message message = this.rsocketRequester
                 .route("request-response")
+                .metadata(TOKEN, mimeType)
                 .data(new Message(CLIENT, REQUEST))
                 .retrieveMono(Message.class)
                 .block();
@@ -64,6 +76,7 @@ public class RSocketShellClient {
         log.info("\nFire-And-Forget. Sending one request. Expect no response (check server log)...");
         this.rsocketRequester
                 .route("fire-and-forget")
+                .metadata(TOKEN, mimeType)
                 .data(new Message(CLIENT, FIRE_AND_FORGET))
                 .send()
                 .block();
@@ -74,6 +87,7 @@ public class RSocketShellClient {
         log.info("\nRequest-Stream. Sending one request. Waiting for unlimited responses (Stop process to quit)...");
         this.disposable = this.rsocketRequester
                 .route("stream")
+                .metadata(TOKEN, mimeType)
                 .data(new Message(CLIENT, STREAM))
                 .retrieveFlux(Message.class)
                 .subscribe(er -> log.info("Response received: {}", er));
@@ -97,10 +111,35 @@ public class RSocketShellClient {
 
         disposable = this.rsocketRequester
                 .route("channel")
+                .metadata(TOKEN, mimeType)
                 .data(settings)
                 .retrieveFlux(Message.class)
                 .subscribe(message -> log.info("Received: {} \n(Type 's' to stop.)", message));
     }
+
+
+    @ShellMethod("Sign-in.")
+    public void signin() throws InterruptedException {
+        log.info("\nSignin...");
+        Token message = this.rsocketRequester
+                .route("signin")
+                .data(account)
+                .retrieveMono(Token.class)
+                .block();
+        log.info("\nResponse was: {}", message);
+    }
+
+    @ShellMethod("Refresh token.")
+    public void refresh() throws InterruptedException {
+        log.info("\nRefresh...");
+        Token message = this.rsocketRequester
+                .route("refresh")
+                .data(account)
+                .retrieveMono(Token.class)
+                .block();
+        log.info("\nResponse was: {}", message);
+    }
+
 }
 
 @Slf4j
