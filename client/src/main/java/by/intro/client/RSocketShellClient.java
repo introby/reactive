@@ -28,7 +28,7 @@ public class RSocketShellClient {
     private final RSocketRequester rsocketRequester;
     private static Disposable disposable;
 
-    private static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInNjb3BlIjoiQURNSU4iLCJleHAiOjE2MzAzMzM0ODYsImp0aSI6IjFmMGIxYWE3LTc2NWYtNGQxMi04NGY2LTBlOGZlM2U4OWI3MyJ9.1TDS5P2maMA3lmTZ75CT1nHo_ilVsjeYSzOscuHGxwU";
+    private static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInNjb3BlIjoiQURNSU4iLCJleHAiOjE2MzAzOTU5NDUsImp0aSI6ImFmMjg3OTM1LWRiOGItNDJlYy04MmZiLTg3NGU3OTkzYWNlNyJ9.HsWjL93WKYM2eqEeGPPrUY4WD-r5P_DAedeYxoQlHAE";
     Account account = new Account("admin", "admin", AccountRole.ADMIN);
 //    Account account = new Account("user", "user", AccountRole.USER);
 
@@ -139,7 +139,6 @@ public class RSocketShellClient {
                 .block();
         log.info("\nResponse was: {}", message);
     }
-
 }
 
 @Slf4j

@@ -1,7 +1,6 @@
 package by.intro.server.security.jwt;
 
 import by.intro.server.security.SecurityConfig;
-import by.intro.server.security.TokenUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.rsocket.RSocketStrategies;
@@ -9,32 +8,27 @@ import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHa
 import org.springframework.security.config.annotation.rsocket.EnableRSocketSecurity;
 import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
-import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtReactiveAuthenticationManager;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
+import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;
 
 @Configuration
 @EnableRSocketSecurity
 public class JwtSecurityConfig extends SecurityConfig {
 
     @Bean
-    PayloadSocketAcceptorInterceptor authorization(RSocketSecurity rsocketSecurity) {
+    PayloadSocketAcceptorInterceptor authorization(RSocketSecurity rsocketSecurity, ReactiveJwtDecoder jwtDecoder) {
         RSocketSecurity security = pattern(rsocketSecurity)
                 .jwt(jwtSpec -> {
                     try {
-                        jwtSpec.authenticationManager(jwtReactiveAuthenticationManager(jwtDecoder()));
+                        jwtSpec.authenticationManager(jwtReactiveAuthenticationManager(jwtDecoder));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
         return security.build();
-    }
-
-    @Bean
-    public ReactiveJwtDecoder jwtDecoder() {
-        return TokenUtils.jwtAccessTokenDecoder();
     }
 
     @Bean

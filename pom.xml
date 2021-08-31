@@ -13,9 +13,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>reactive</name>
 	<description>Demo project for Spring Boot</description>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>server</module>
+		<module>client</module>
+		<module>gateway</module>
+	</modules>
+
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-
 
 </project>

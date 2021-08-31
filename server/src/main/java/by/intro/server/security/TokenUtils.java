@@ -30,7 +30,6 @@ public class TokenUtils {
     private static final MacAlgorithm MAC_ALGORITHM = MacAlgorithm.HS256;
     private static final String HMAC_SHA_256 = "HmacSHA256";
 
-
     public static AccountToken generateAccessToken(Account account) {
         Algorithm accessAlgorithm = Algorithm.HMAC256(ACCESS_SECRET_KEY);
         return generateToken(account, accessAlgorithm, ACCESS_EXPIRE, ChronoUnit.MINUTES);
@@ -41,10 +40,6 @@ public class TokenUtils {
         return NimbusReactiveJwtDecoder.withSecretKey(secretKey)
                 .macAlgorithm(MAC_ALGORITHM)
                 .build();
-    }
-
-    public static ReactiveJwtDecoder jwtAccessTokenDecoder() {
-        return new AppJwtDecoder(getAccessTokenDecoder());
     }
 
     public static AccountToken generateRefreshToken(Account account) {
