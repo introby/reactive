@@ -8,6 +8,12 @@ spring:
       authentication-database: database
       database: ${MONGO_DB:person_react}
 
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/reactive_test
+    protocol: r2dbc
+    password: postgres
+    username: postgres
+
   main:
     lazy-initialization: true
   rsocket:
