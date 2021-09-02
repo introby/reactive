@@ -16,12 +16,22 @@
     <properties>
         <java.version>11</java.version>
         <jooq.version>3.15.2</jooq.version>
-<!--        <db.driver>org.postgresql.Driver</db.driver>-->
-<!--        <db.url>r2dbc:postgresql://localhost:5432/reactive_test</db.url>-->
-<!--        <db.username>postgres</db.username>-->
-<!--        <db.password>postgres</db.password>-->
+        <db.driver>org.postgresql.Driver</db.driver>
+        <db.url>jdbc:postgresql://localhost:5432/reactive_test</db.url>
+        <db.username>postgres</db.username>
+        <db.password>postgres</db.password>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -120,14 +130,9 @@
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
-            <artifactId>jooq-meta-extensions</artifactId>
+            <artifactId>jooq-meta</artifactId>
             <version>${jooq.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.jooq</groupId>-->
-<!--            <artifactId>jooq-codegen</artifactId>-->
-<!--            <version>${jooq.version}</version>-->
-<!--        </dependency>-->
 
     </dependencies>
 
@@ -148,6 +153,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
+                <version>3.15.2</version>
 
                 <executions>
                     <execution>
@@ -157,15 +163,24 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <jdbc>
+                                <driver>${db.driver}</driver>
+                                <url>${db.url}</url>
+                                <user>${db.username}</user>
+                                <password>${db.password}</password>
+                            </jdbc>
                             <generator>
                                 <database>
-                                    <name>reactive_test</name>
+                                    <name>org.jooq.meta.postgres.PostgresDatabase</name>
                                     <properties>
                                         <property>
                                             <key>scripts</key>
-                                            <value>${basedir}/src/main/resources/db_data.sql</value>
+                                            <value>${basedir}/src/main/resources/db.sql</value>
                                         </property>
                                     </properties>
+                                    <excludes>
+                                        flyway_schema_history
+                                    </excludes>
                                     <inputSchema>public</inputSchema>
                                 </database>
                                 <target>
@@ -177,7 +192,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

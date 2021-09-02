@@ -1,6 +1,7 @@
 package by.intro.server.controller;
 
 import by.intro.server.model.Car;
+import by.intro.server.model.CarDto;
 import by.intro.server.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,10 @@ public class CarController {
                                 .then(Mono.just(new ResponseEntity<Void>(HttpStatus.OK)))
                 )
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/car-list")
+    public Flux<CarDto> findAllCars() {
+        return carService.findAllCars();
     }
 }

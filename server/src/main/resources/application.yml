@@ -9,13 +9,31 @@ spring:
       database: ${MONGO_DB:person_react}
 
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/reactive_test
+    url: r2dbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:reactive_test}
     protocol: r2dbc
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:reactive_test}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    name: ${POSTGRES_DB:reactive_test}
+
+  flyway:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:reactive_test}
+    user: postgres
     password: postgres
-    username: postgres
+    baseline-on-migrate: true
 
   main:
     lazy-initialization: true
+
   rsocket:
     server:
       port: 7001
+
+#logging:
+#  level:
+#    root: debug
