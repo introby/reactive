@@ -1,7 +1,7 @@
 package by.intro.server.controller;
 
 import by.intro.server.model.Car;
-import by.intro.server.model.CarDto;
+import by.intro.server.model.dto.CarDto;
 import by.intro.server.service.CarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

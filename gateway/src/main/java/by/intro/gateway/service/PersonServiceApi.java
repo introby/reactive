@@ -1,20 +1,28 @@
 package by.intro.gateway.service;
 
-import by.intro.gateway.model.Person;
+import by.intro.personclientlibs.dto.PersonDto;
 import feign.Headers;
-import feign.RequestLine;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import reactivefeign.spring.config.ReactiveFeignClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Headers({ "Accept: application/json" })
+@ConditionalOnProperty(value = "gateway.person.url")
+@ReactiveFeignClient(
+        name = "PersonServiceApi",
+        url = "${gateway.person.url}",
+        path = "/api/v1/persons")
+@Headers({"Accept: application/json"})
 public interface PersonServiceApi {
 
-    @RequestLine("GET /api/v1/persons/all")
-    Flux<Person> getAllPersons();
+    @GetMapping("/all")
+    Flux<PersonDto> getAllPersons();
 
-    @RequestLine("GET /api/v1/persons/oldest")
-    Mono<Person> getOldestPerson();
+    @GetMapping("/oldest")
+    Mono<PersonDto> getOldestPerson();
 
-    @RequestLine("POST /api/v1/persons/add")
-    Mono<Person> addPerson(Person person);
+    @PostMapping("/add")
+    Mono<PersonDto> addPerson(PersonDto personDto);
 }

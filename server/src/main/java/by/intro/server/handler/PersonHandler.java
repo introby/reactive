@@ -1,5 +1,6 @@
 package by.intro.server.handler;
 
+import by.intro.personclientlibs.dto.PersonDto;
 import by.intro.server.model.Person;
 import by.intro.server.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +29,14 @@ public class PersonHandler {
     public Mono<ServerResponse> findAll(ServerRequest request) {
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(personService.getAllPersons(), Person.class);
+                .body(personService.getAllPersons(), PersonDto.class);
     }
 
     public Mono<ServerResponse> save(ServerRequest request) {
-        final Mono<Person> person = request.bodyToMono(Person.class);
+        final Mono<PersonDto> person = request.bodyToMono(PersonDto.class);
         return ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(fromPublisher(person.flatMap(personService::addPerson), Person.class));
+                .body(fromPublisher(person.flatMap(personService::addPerson), PersonDto.class));
     }
 
     public Mono<ServerResponse> delete(ServerRequest request) {

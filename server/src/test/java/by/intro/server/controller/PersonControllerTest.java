@@ -1,6 +1,6 @@
 package by.intro.server.controller;
 
-import by.intro.server.model.Person;
+import by.intro.personclientlibs.dto.PersonDto;
 import by.intro.server.service.PersonService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,14 +18,14 @@ class PersonControllerTest {
 
     @Test
     void shouldReturnSixPerson() {
-        Person[] persons = new Person[]{
+        PersonDto[] persons = new PersonDto[]{
                 createPerson(1L), createPerson(2L),
                 createPerson(3L), createPerson(4L),
                 createPerson(5L), createPerson(6L),
                 createPerson(7L), createPerson(8L),
                 createPerson(9L), createPerson(10L)
         };
-        Flux<Person> personFlux = Flux.just(persons);
+        Flux<PersonDto> personFlux = Flux.just(persons);
 
         PersonService personService = Mockito.mock(PersonService.class);
         Mockito.when(personService.getAllPersons()).thenReturn(personFlux);
@@ -52,25 +52,25 @@ class PersonControllerTest {
     @Test
     public void shouldSavePerson() {
         PersonService personService = Mockito.mock(PersonService.class);
-        Mono<Person> unsavedPersonMono = Mono.just(createPerson(null));
-        Person savedPerson = createPerson(null);
-        Mono<Person> savedTacoMono = Mono.just(savedPerson);
+        Mono<PersonDto> unsavedPersonMono = Mono.just(createPerson(null));
+        PersonDto savedPerson = createPerson(null);
+        Mono<PersonDto> savedTacoMono = Mono.just(savedPerson);
         Mockito.when(personService.addPerson(any())).thenReturn(savedTacoMono);
         WebTestClient testClient = WebTestClient.bindToController(
                 new PersonController(personService)).build();
         testClient.post()
                 .uri("/api/v1/persons/add")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(unsavedPersonMono, Person.class)
+                .body(unsavedPersonMono, PersonDto.class)
                 .exchange()
                 .expectStatus().isCreated()
-                .expectBody(Person.class)
+                .expectBody(PersonDto.class)
                 .isEqualTo(savedPerson);
     }
 
 
-    private Person createPerson(Long number) {
-        Person person = new Person();
+    private PersonDto createPerson(Long number) {
+        PersonDto person = new PersonDto();
         person.setId(UUID.randomUUID().toString());
         person.setName("Person " + number);
         person.setAge(new Random().nextInt(80));

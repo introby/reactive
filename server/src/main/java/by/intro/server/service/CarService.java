@@ -1,7 +1,7 @@
 package by.intro.server.service;
 
 import by.intro.server.model.Car;
-import by.intro.server.model.CarDto;
+import by.intro.server.model.dto.CarDto;
 import by.intro.server.model.tables.Audi;
 import by.intro.server.model.tables.Seat;
 import by.intro.server.model.tables.Vw;

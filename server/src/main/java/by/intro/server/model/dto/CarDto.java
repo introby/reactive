@@ -1,4 +1,4 @@
-package by.intro.server.model;
+package by.intro.server.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
