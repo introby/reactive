@@ -1,6 +1,6 @@
 package by.intro.server.handler;
 
-import by.intro.personclientlibs.dto.PersonDto;
+import by.intro.personclientlibs.model.dto.PersonDto;
 import by.intro.server.model.Person;
 import by.intro.server.service.PersonService;
 import lombok.RequiredArgsConstructor;

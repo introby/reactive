@@ -1,6 +1,6 @@
 package by.intro.server.controller;
 
-import by.intro.personclientlibs.dto.PersonDto;
+import by.intro.personclientlibs.model.dto.PersonDto;
 import by.intro.server.service.PersonService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

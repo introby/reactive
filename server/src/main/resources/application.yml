@@ -28,7 +28,7 @@ spring:
     baseline-on-migrate: true
 
   main:
-    lazy-initialization: true
+    lazy-initialization: false
 
   rsocket:
     server:

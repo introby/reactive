@@ -1,7 +1,7 @@
 package by.intro.gateway.controller;
 
-import by.intro.gateway.service.PersonServiceApi;
-import by.intro.personclientlibs.dto.PersonDto;
+import by.intro.personclientlibs.service.PersonServiceApi;
+import by.intro.personclientlibs.model.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

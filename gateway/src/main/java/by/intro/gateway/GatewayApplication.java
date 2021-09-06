@@ -1,11 +1,12 @@
 package by.intro.gateway;
 
+import by.intro.personclientlibs.service.PersonServiceApi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import reactivefeign.spring.config.EnableReactiveFeignClients;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@EnableReactiveFeignClients
+@Import({PersonServiceApi.class})
 public class GatewayApplication {
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package by.intro.personclientlibs.dto;
+package by.intro.personclientlibs.model.dto;
 
 import lombok.Data;
 

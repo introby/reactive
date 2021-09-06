@@ -4,3 +4,7 @@ server:
 gateway:
   person:
     url: http://localhost:8080
+
+spring:
+  main:
+    allow-bean-definition-overriding: true

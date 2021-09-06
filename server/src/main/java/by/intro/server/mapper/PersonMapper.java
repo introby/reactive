@@ -1,6 +1,6 @@
 package by.intro.server.mapper;
 
-import by.intro.personclientlibs.dto.PersonDto;
+import by.intro.personclientlibs.model.dto.PersonDto;
 import by.intro.server.model.Person;
 import org.mapstruct.Mapper;
 
