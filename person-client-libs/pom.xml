@@ -13,8 +13,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>person-client-libs</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
     <properties>
-        <java.version>11</java.version>
+        <java.version>16</java.version>
     </properties>
     <dependencies>
         <dependency>
